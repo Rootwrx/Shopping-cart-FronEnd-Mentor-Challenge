@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script type="module" defer src="./src/js/app.js"></script>
+
+    <title>Vanilla JS</title>
+  </head>
+  <body>
+    <div class="order-confirmed">
+      <div>
+        <img
+          src="assets/images/icon-order-confirmed.svg"
+          alt="order confirmed icon"
+        />
+        <h3>order confirmed</h3>
+        <span>we hope you enjoy your food</span>
+      </div>
+      <!-- <div class="cart-body cloned">
+        <div class="cart-items">
+          <div class="cart-item item">
+            <div class="item-details">
+              <img src="./assets/images/image-baklava-mobile.jpg" alt="" />
+              <div>
+                <h4 class="item-name">Classic Tiramisu</h4>
+                <p class="item-pricing">
+                  <span class="item-quantity">3x</span>
+                  <span class="item-price">$5.50</span>
+                  <span class="item-total">$5.50</span>
+                </p>
+              </div>
+            </div>
+            <span class="item-total">$16.50</span>
+            <button class="remove-cart-item btn-xs">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+          <div class="cart-item item">
+            <div class="item-details">
+              <img src="./assets/images/image-baklava-mobile.jpg" alt="" />
+              <div>
+                <h4 class="item-name">Classic Tiramisu</h4>
+                <p class="item-pricing">
+                  <span class="item-quantity">3x</span>
+                  <span class="item-price">$5.50</span>
+                  <span class="item-total">$5.50</span>
+                </p>
+              </div>
+            </div>
+            <span class="item-total">$16.50</span>
+            <button class="remove-cart-item btn-xs">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+          <div class="cart-item item">
+            <div class="item-details">
+              <img src="./assets/images/image-baklava-mobile.jpg" alt="" />
+              <div>
+                <h4 class="item-name">Classic Tiramisu</h4>
+                <p class="item-pricing">
+                  <span class="item-quantity">3x</span>
+                  <span class="item-price">$5.50</span>
+                  <span class="item-total">$5.50</span>
+                </p>
+              </div>
+            </div>
+            <span class="item-total">$16.50</span>
+            <button class="remove-cart-item btn-xs">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="order-total">
+            <span class="total-label">Order Total</span>
+            <h4 class="total-amount">$0</h4>
+          </div>
+        </div>
+      </div> -->
+      <button class="btn start-new-order">start a new order</button>
+    </div>
+
+    <div class="overlay"></div>
+    <header class="header">
+      <nav class="container">
+        <a href="#0" class="logo">Shopping Cart</a>
+
+        <button class="cart-icon"><i class="bx bx-cart"></i></button>
+      </nav>
+    </header>
+
+    <section class="products-container container">
+      <h1>Desserts</h1>
+      <div class="content">
+        <div class="products">
+          <!-- <div class="product">
+            <div class="product-image">
+              <picture>
+                <source
+                  media="(min-width: 768px)"
+                  srcset="./assets/images/image-baklava-desktop.jpg"
+                />
+                <source
+                  media="(min-width: 640px)"
+                  srcset="./assets/images/image-baklava-tablet.jpg"
+                />
+                <img
+                  src="./assets/images/image-baklava-mobile.jpg"
+                  alt="Description of the image"
+                />
+              </picture>
+              <div class="btns">
+                <button class="addtocart-btn btn">
+                  <i class="bx bx-cart"></i> Add to Cart
+                </button>
+
+                <div class="product-quantity btn">
+                  <button class="btn-xs remove-product">
+                    <i class="bx bx-minus"> </i>
+                  </button>
+
+                  <span class="item-quantity">1</span>
+
+                  <button class="btn-xs add-product">
+                    <i class="bx bx-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <h3 class="product-category">waffle</h3>
+              <h4 class="product-name">waffle sugar wallo</h4>
+              <span class="product-price">$45.00</span>
+            </div>
+          </div> -->
+        </div>
+
+        <aside class="cart-container cart">
+          <h3 class="cart-title">
+            Your Cart (<span class="item-count">0</span>)
+          </h3>
+
+          <div class="cart-empty">
+            <img
+              src="./assets/images/illustration-empty-cart.svg"
+              alt="illustration empty cart"
+            />
+            <h3>your added items will appear here.</h3>
+          </div>
+          <div class="cart-holder hidden">
+            <div class="cart-body">
+              <div class="cart-items"></div>
+              <div class="cart-summary">
+                <div class="order-total">
+                  <span class="total-label">Order Total</span>
+                  <h4 class="total-amount">
+                    $<span class="cart-total">0</span>
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <p class="delivery-note">This is a carbon-neutral delivery</p>
+            <button class="btn confirm-order">Confirm Order</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </body>
+</html>

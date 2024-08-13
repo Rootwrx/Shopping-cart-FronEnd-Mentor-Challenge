@@ -1,0 +1,26 @@
+.header {
+  height: var(--header-height);
+  background-color: var(--clr-rose-100);
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    color: var(--clr-red);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-bold);
+  }
+  .cart-icon {
+    font-size: var(--fs-h4);
+    background-color: var(--clr-white);
+    color: var(--clr-red);
+
+    border-radius: var(--br-md);
+    @extend %fc;
+    @include box(40px);
+    @include media(lg) {
+      display: none;
+    }
+  }
+}
