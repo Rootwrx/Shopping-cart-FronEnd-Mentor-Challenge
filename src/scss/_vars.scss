@@ -1,15 +1,13 @@
-@import "./base/mixins";
+@import "./mixins";
 
 // Red Hat Text
-@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap");
-
+// @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap");
 // raleway
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 // poppins
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-
+// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 // open sans
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
   --clr-red: hsl(14, 86%, 42%);
@@ -21,11 +19,19 @@
   --clr-rose-500: hsl(12, 20%, 44%);
   --clr-rose-900: hsl(14, 65%, 9%);
 
-  --clr-product-category: #999;
-  --clr-product-name: #555454;
+  --clr-gray-light: #999;
+  --clr-gray-dark: #555454;
 
   --clr-white: #fff;
-  /* Gradients */
+
+  /* Font Family */
+  --ff-headings: "Red Hat Text", sans-serif;
+  --ff-body: "Open Sans", sans-serif;
+
+  /* Font Weight */
+  --fw-normal: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
 
   /* Base font sizes (mobile) */
   --fs-xs: 0.75rem; /* 12px if base font size is 16px */
@@ -48,6 +54,37 @@
   --box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --box-shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
 
+  /* Spacing system */
+
+  --spacing-0: 0;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.5rem; /* 24px */
+  --spacing-6: 2rem; /* 32px */
+  --spacing-8: 3rem; /* 48px */
+  --spacing-10: 4rem; /* 64px */
+  --spacing-12: 6rem; /* 96px */
+
+  --spacing-responsive: var(--spacing-xs);
+
+  /* Border Radius */
+  --br-1: 4px;
+  --br-2: 8px;
+  --br-3: 10px;
+  --br-4: 16px;
+  --br-5: 20px;
+  --br-6: 24px;
+  --br-pill: 100px;
+  --br-full: 50%;
+
+  /* Header Height */
+  --header-height: 4rem;
+
+  /* Transition */
+  --transition-speed: 0.3s;
+
   /* Z-index */
   --z-index-dropdown: 1000;
   --z-index-sticky: 1020;
@@ -56,6 +93,10 @@
   --z-index-modal: 1050;
   --z-index-popover: 1060;
   --z-index-tooltip: 1070;
+  --z-index-loader: 1080;
+
+  --z-index-cart: 1090;
+  --z-index-confirm-order: 2000;
 
   @include media(md) {
     --fs-xs: 0.8125rem; /* 13px */
@@ -91,42 +132,49 @@
     --fs-big-title: 4.5rem; /* 72px */
   }
 
-  /* Font Family */
-  --ff-headings: "Raleway", sans-serif;
-  --ff-body: "Open Sans", sans-serif;
+  --scrollbar-width: 12px;
 
-  --fw-normal: 400;
-  --fw-semibold: 600;
-  --fw-bold: 700;
+  --scrollbar-track-bg: #f1f1f1;
+  --scrollbar-track-br: 20px;
 
-  /* Spacing */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 2rem; /* 32px */
-  --spacing-xl: 4rem; /* 64px */
-  --spacing-xxl: 5rem; /* 80px */
-
-  --spacing-responsive: var(--spacing-xs);
-
-  /* Border Radius */
-  --br-sm: 4px;
-  --br-md: 05px;
-  --br-lg: 10px;
-  --br-xl: 25px;
-  --br-xxl: 25px;
-  --br-pile: 200px;
-  --br-round: 50%;
-
-  /* Header Height */
-  --header-height: 4rem;
-
-  /* Transition */
-  --transition-speed: 0.3s;
-
+  --scrollbar-thumb-bg: #b9b9b9;
+  --scrollbar-thumb-hover-bg: #555;
+  --scrollbar-thumb-br: 10px;
   /* High Contrast Mode */
-  @media (prefers-contrast: high) {
-    --clr-accent-cyan: hsl(176, 100%, 50%);
-    --clr-accent-blue: hsl(198, 100%, 50%);
-  }
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("../font/static/RedHatText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("../font/static/RedHatText-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("../font/static/RedHatText-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("../font/static/RedHatText-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("../font/static/RedHatText-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }

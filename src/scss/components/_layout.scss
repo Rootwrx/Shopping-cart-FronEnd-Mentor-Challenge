@@ -1,7 +1,3 @@
-body {
-  background-color: var(--clr-rose-50);
-}
-
 .overlay {
   height: 100%;
   width: 100%;
@@ -12,29 +8,28 @@ body {
   inset: 0;
   pointer-events: none;
   transition: var(--transition-duration-slow);
-  // @include media(lg, max) {
   &.show {
     opacity: 0.5;
     pointer-events: all;
   }
-  // }
 }
 
-// Base Styles
 .products-container {
   h1 {
     font-size: var(--fs-h1);
-    margin-block: var(--spacing-md);
+    margin-block: var(--spacing-4);
   }
   .content {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-4);
+
     .products {
       flex-grow: 1;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-sm);
+      gap: var(--spacing-2);
     }
+
     .cart {
       align-self: flex-start;
       justify-self: end;
@@ -43,32 +38,39 @@ body {
 }
 
 .order-confirmed {
+  scroll-snap-type: y mandatory;
+  max-height: 70%;
   position: fixed;
   display: grid;
-  gap: var(--spacing-md);
-  top: 40%;
+  gap: var(--spacing-4);
+  top: 50%;
+  overflow: auto;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--clr-white);
-  z-index: var(--z-index-modal);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--br-lg);
+  z-index: var(--z-index-confirm-order);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-radius: var(--br-3);
   box-shadow: var(--box-shadow-lg);
   width: 400px;
   max-width: 100%;
   @include fade(out);
   transition: none;
+
   &.show {
     @include fade(in);
   }
+
   .cart-body {
     background-color: var(--clr-rose-50);
-    padding: var(--spacing-md);
-    border-radius: var(--br-md);
+    padding: var(--spacing-4);
+    border-radius: var(--br-1);
   }
+
   span {
     color: var(--clr-rose-500);
   }
+
   h3 {
     font-size: var(--fs-h2);
     font-weight: bolder;
@@ -76,12 +78,13 @@ body {
 
   .btn {
     width: 100%;
-    border-radius: var(--br-lg);
+    border-radius: var(--br-3);
 
     &:hover {
       background-color: hsl(from var(--clr-red) h s l / 90%);
     }
   }
+
   img {
     max-width: 45px;
   }

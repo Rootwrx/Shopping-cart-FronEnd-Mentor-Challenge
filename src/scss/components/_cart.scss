@@ -1,14 +1,15 @@
 .cart {
   background-color: var(--clr-white);
-  padding: var(--spacing-md);
-  border-radius: var(--br-lg);
+  padding: var(--spacing-4);
+  border-radius: var(--br-3);
   box-shadow: var(--box-shadow-lg);
   width: 300px;
   position: sticky;
+  flex: none;
   top: 0;
 
   @include media(lg, max) {
-    z-index: var(--z-index-modal);
+    z-index: var(--z-index-cart);
     top: 50%;
     transform: translate(-50%, -50%);
     left: 50%;
@@ -25,19 +26,23 @@
   &-holder.hidden {
     display: none;
   }
+
   &-empty {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: var(--spacing-4) var(--spacing-2);
+
     &.hidden {
       display: none;
     }
+
     img {
-      max-width: 130px;
-      margin-bottom: var(--spacing-md);
+      width: 130px;
+      margin-bottom: var(--spacing-4);
     }
+
     h3 {
       font-size: var(--fs-sm);
       color: var(--clr-rose-500);
@@ -45,11 +50,12 @@
       white-space: nowrap;
     }
   }
+
   &-title {
     text-align: center;
-    font-size: var(--fs-h2);
+    font-size: var(--fs-h4);
     color: var(--clr-red);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-2);
 
     &-count {
       font-weight: var(--fw-bold);
@@ -58,28 +64,26 @@
   }
 
   &-items {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-4);
   }
 
   .delivery-note {
+    @extend %flex-center;
+    gap: var(--spacing-2);
     font-size: var(--fs-xs);
-    color: var(--clr-product-name);
-    margin-bottom: var(--spacing-md);
+    color: var(--clr-gray-dark);
+    margin-bottom: var(--spacing-4);
     text-align: center;
     background-color: var(--clr-rose-100);
-    padding: var(--spacing-xs);
-    border-radius: var(--br-sm);
+    padding: var(--spacing-1);
+    border-radius: var(--br-1);
     width: fit-content;
     margin-inline: auto;
-    padding-inline: var(--spacing-sm);
-    margin-top: var(--spacing-md);
+    padding-inline: var(--spacing-2);
+    margin-top: var(--spacing-4);
   }
 
-  .btn {
-    margin: auto;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    width: auto;
-  }
+  
 }
 
 .cart-body {
@@ -91,24 +95,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-sm) 0;
+    padding: var(--spacing-2) 0;
 
     &:last-child {
       border-bottom: none;
     }
+    .btn-action {
+      border-color: var(--clr-rose-300);
+      &:hover {
+        border-color: var(--clr-rose-500);
+      }
+    }
 
     &-name {
       font-size: var(--fs-md);
-      color: var(--clr-product-name);
+      color: var(--clr-gray-dark);
       margin: 0;
     }
+
     &-details {
       display: flex;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-2);
       img {
         display: none;
         @include box(50px);
-        border-radius: var(--br-md);
+        border-radius: var(--br-1);
         object-fit: cover;
         object-position: center;
       }
@@ -116,26 +127,28 @@
 
     &-pricing {
       font-size: var(--fs-sm);
-      color: var(--clr-product-name);
-      margin-top: var(--spacing-xs);
+      color: var(--clr-gray-dark);
+      margin-top: var(--spacing-1);
     }
+
     &-quantity {
       font-weight: var(--fw-semibold);
       color: var(--clr-red);
     }
 
     &-price {
-      margin-left: var(--spacing-xs);
+      margin-left: var(--spacing-1);
     }
+
     &-price,
     &-total {
       font-weight: var(--fw-seimbold);
-      color: var(--clr-product-category);
+      color: var(--clr-gray-light);
     }
+
     &-total.toclone {
       display: none;
     }
-    
   }
   .cart-summary {
     .order-total {
@@ -146,7 +159,7 @@
 
       .total-label {
         font-size: var(--fs-md);
-        color: var(--clr-product-name);
+        color: var(--clr-gray-dark);
       }
 
       .total-amount {
@@ -157,19 +170,19 @@
     }
   }
   &.cloned {
-      .confirm-order,
-      .delivery-note,
-      .item-pricing .item-total,
-      .remove-cart-item {
-        display: none;
-      }
-      .item-total.toclone {
+    .confirm-order,
+    .delivery-note,
+    .item-pricing .item-total,
+    .remove-cart-item {
+      display: none;
+    }
+    .item-total.toclone {
+      display: block;
+    }
+    .item-details {
+      img {
         display: block;
       }
-      .item-details {
-        img {
-          display: block;
-        }
-      }
     }
+  }
 }

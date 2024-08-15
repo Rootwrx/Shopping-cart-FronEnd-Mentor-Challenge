@@ -1,0 +1,72 @@
+$grid-breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px,
+);
+
+@mixin media($size, $type: min) {
+  @if map-has-key($grid-breakpoints, $size) {
+    $width: map-get($grid-breakpoints, $size);
+
+    @if $type ==max {
+      $width: $width - 1;
+    }
+
+    @media only screen and (#{$type}-width : $width) {
+      @content;
+    }
+  }
+}
+
+@mixin media-between($lower, $upper) {
+  @if map-has-key($grid-breakpoints, $lower) and
+    map-has-key($grid-breakpoints, $upper)
+  {
+    $lower-breakpoint: map-get($grid-breakpoints, $lower);
+    $upper-breakpoint: map-get($grid-breakpoints, $upper);
+
+    @media (min-width: $lower-breakpoint) and (max-width: ($upper-breakpoint - 1)) {
+      @content;
+    }
+  }
+}
+
+@mixin fade($type: in, $duration: 0.3s, $easing: ease-in-out) {
+  transition: all $duration $easing, height 0.3s ease-in-out;
+  @if $type == in {
+    pointer-events: all;
+    visibility: visible;
+    opacity: 1;
+  } @else if $type == out {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@function rem($px, $base: 16px) {
+  @return $px / $base * 1rem;
+}
+@mixin box($w, $h: $w) {
+  width: $w;
+  height: $h;
+}
+
+%flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+%flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+%grid-center {
+  display: grid;
+  place-items: center;
+}

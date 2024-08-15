@@ -10,15 +10,16 @@
     color: var(--clr-red);
     font-size: var(--fs-h2);
     font-weight: var(--fw-bold);
+    @include media(sm, max) {
+      font-size: var(--fs-h4);
+    }
   }
   .cart-icon {
-    font-size: var(--fs-h4);
-    background-color: var(--clr-white);
-    color: var(--clr-red);
-
-    border-radius: var(--br-md);
-    @extend %fc;
-    @include box(40px);
+    @extend %flex-center !optional;
+    @include box(30px);
+    img {
+      max-width: 30px;
+    }
     @include media(lg) {
       display: none;
     }

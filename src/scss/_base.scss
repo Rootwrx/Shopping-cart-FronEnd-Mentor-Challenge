@@ -1,0 +1,144 @@
+@use "mixins" as *;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  outline: none;
+  list-style: none;
+  font: inherit;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  line-height: 1.6;
+  overflow-x: hidden;
+  font-family: var(--ff-body);
+  background-color: var(--clr-rose-50);
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+button,
+input {
+  border: transparent;
+  cursor: pointer;
+}
+img {
+  background-repeat: no-repeat;
+  max-width: 100%;
+  height: auto;
+  font-style: italic;
+  background-size: cover;
+  vertical-align: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* prettier-ignore */
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--ff-headings);
+  font-weight: var(--fw-bold);
+}
+/* prettier-ignore */
+a,button,h1,h2,h3,h4,h5,h6 {
+  text-transform: capitalize;
+}
+/* Target the scrollbar */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width); /* width of the entire scrollbar */
+}
+/* Track = where the thumb (handle) moves x or v  */
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg); /* color of the track */
+  border-radius: var(--scrollbar-track-br); /* round the corners of the track */
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg); /* color of the handle */
+  border-radius: var(
+    --scrollbar-thumb-br
+  ); /* round the corners of the handle */
+  border: 2px solid #f1f1f1; /* adds space around the handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg); /* color when hovered */
+}
+
+.container {
+  width: 90%;
+  padding-inline: var(--spacing-4);
+  margin-inline: auto;
+  height: 100%;
+  max-width: 1224px;
+}
+.main-btn {
+  @extend %flex-between;
+  gap: var(--spacing-2);
+  white-space: nowrap;
+  font-weight: var(--fw-semibold);
+  text-align: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--br-3);
+  &:hover {
+    background-color: hsl(from var(--clr-red) h s l / 90%);
+  }
+}
+
+.btn-action {
+  @include box(20px);
+  background-color: transparent;
+  border-radius: var(--br-full);
+  @extend %flex-center;
+  border: 1px solid transparent;
+}
+
+.loader {
+  background-color: white;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: var(--z-index-loader);
+  @include box(100%);
+
+  &::before {
+    position: absolute;
+    content: "";
+    margin: auto;
+    z-index: calc(var(--z-index-loader) + 1);
+    @include box(100px);
+    border-radius: var(--br-full);
+    border: 3px solid;
+    border-left: none;
+    animation: spin 1s infinite linear forwards;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart,
+.order-confirmed {
+  .main-btn {
+    margin: auto;
+    padding: var(--spacing-2) var(--spacing-6);
+    width: auto;
+    background-color: var(--clr-red);
+    color: var(--clr-white);
+
+    &:hover {
+      background-color: hsl(from var(--clr-red) h s l / 90%);
+    }
+  }
+}

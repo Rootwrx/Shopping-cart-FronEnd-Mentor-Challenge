@@ -1,13 +1,8 @@
 @use "./vars" as *;
-@use "./base/base";
-@use "./reusable";
+@use "./base";
 
-// importing pages
-@import "./pages/layout";
-@import "./pages/product-card";
-@import "./pages/cart";
-@import "./pages/header";
-// @import "./pages/hero";
-// @import "./pages/features";
-// @import "./pages/footer";
-
+// importing components
+@import "./components/header";
+@import "./components/layout";
+@import "./components/product";
+@import "./components/cart";
