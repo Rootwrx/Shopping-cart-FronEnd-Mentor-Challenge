@@ -10,72 +10,88 @@
     <title>Product List With Cart</title>
   </head>
   <body>
-    <div class="loader"></div>
-    <div class="order-confirmed">
+    <div class="loader" role="status" aria-label="Loading content"></div>
+    <div class="order-confirmed" aria-live="polite" hidden>
       <div>
         <img
           src="assets/images/icon-order-confirmed.svg"
-          alt="order confirmed icon"
+          alt="Order confirmed icon"
         />
-        <h3>order confirmed</h3>
-        <span>we hope you enjoy your food</span>
+        <h2>Order confirmed</h2>
+        <p>We hope you enjoy your food</p>
       </div>
 
-      <button class="main-btn start-new-order">start a new order</button>
+      <button class="main-btn start-new-order">Start a new order</button>
     </div>
 
-    <div class="overlay"></div>
-    <header class="header">
+    <div class="overlay" aria-hidden="true"></div>
+    <!-- <header class="header">
       <nav class="container">
-        <a href="#0" class="logo">Shopping Cart</a>
+        <a href="#" class="logo">Shopping Cart</a>
 
-        <button class="cart-icon">
+        <button class="cart-icon" aria-label="Open shopping cart">
           <img
             src="assets/images/icon-shopping-cart.png"
-            alt="icon-shopping-cart"
+            alt=""
           />
         </button>
       </nav>
-    </header>
+    </header> -->
 
-    <section class="products-container container">
-      <h1>Desserts</h1>
-      <div class="content">
-        <div class="products"></div>
-
-        <aside id="cart" class="cart-container cart">
-          <h3 class="cart-title">
-            Your Cart (<span class="item-count">0</span>)
-          </h3>
-
-          <div class="cart-empty">
+    <main>
+      <section class="products-container container">
+        <div class="header">
+          <h1>Desserts</h1>
+          <button class="cart-icon" aria-label="Open shopping cart">
             <img
-              src="./assets/images/illustration-empty-cart.svg"
-              alt="illustration empty cart"
+              src="assets/images/icon-shopping-cart.png"
+              alt="icon-shopping-cart"
             />
-            <!-- <h3>your added items will appear here.</h3> -->
-            <h3>your cart is empty</h3>
-          </div>
-          <div class="cart-holder hidden">
-            <div class="cart-body">
-              <div class="cart-items"></div>
-              <div class="cart-summary">
-                <div class="order-total">
-                  <span class="total-label">Order Total</span>
-                  <h4 class="total-amount">
-                    $<span class="cart-total">0</span>
-                  </h4>
+          </button>
+        </div>
+        <div class="content">
+          <div class="products" role="list"></div>
+
+          <aside
+            id="cart"
+            class="cart-container cart"
+            aria-label="Shopping Cart"
+          >
+            <h2 class="cart-title">
+              Your Cart (<span class="item-count" aria-live="polite">0</span>
+              items)
+            </h2>
+
+            <div class="cart-empty" aria-live="polite">
+              <img
+                src="./assets/images/illustration-empty-cart.svg"
+                alt="Illustration of an empty shopping cart"
+              />
+              <p>Your cart is empty</p>
+            </div>
+            <div class="cart-holder hidden" aria-live="polite">
+              <div class="cart-body">
+                <div class="cart-items" role="list"></div>
+                <div class="cart-summary">
+                  <div class="order-total">
+                    <span id="total-label" class="total-label"
+                      >Order Total</span
+                    >
+                    <p class="total-amount" aria-labelledby="total-label">
+                      $<span class="cart-total">0</span>
+                    </p>
+                  </div>
                 </div>
               </div>
+              <p class="delivery-note">
+                <img src="assets/images/icon-carbon-neutral.svg" alt="" />
+                <span>This is a carbon-neutral delivery</span>
+              </p>
+              <button class="main-btn confirm-order">Confirm Order</button>
             </div>
-            <p class="delivery-note">
-              <img src="assets/images/icon-carbon-neutral.svg" alt="" />
-              <span>This is a carbon-neutral delivery</span>
-            </p>
-            <button class="main-btn confirm-order">Confirm Order</button>
-          </div>
-        </aside>
-      </div>
-    </section>
+          </aside>
+        </div>
+      </section>
+    </main>
   </body>
 </html>

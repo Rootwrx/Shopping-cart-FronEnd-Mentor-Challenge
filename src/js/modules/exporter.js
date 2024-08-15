@@ -41,6 +41,6 @@ export const UISelectors = {
   ConfirmOrder: $(".cart .confirm-order"),
   OrderConfirmed: $(".order-confirmed"),
   Overlay: $(".overlay"),
-  CartIcon: $("header .cart-icon"),
+  CartIcon: $(".header .cart-icon"),
   StartNewOrder: $(".order-confirmed .start-new-order"),
 };

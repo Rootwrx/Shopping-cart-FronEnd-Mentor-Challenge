@@ -1,4 +1,4 @@
-.header .cart-icon, .cart .delivery-note {
+.products-container .header .cart-icon, .cart .delivery-note {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -174,7 +174,7 @@
   font-weight: 400;
   font-style: normal;
 }
-.btn-action, .header .cart-icon, .cart .delivery-note {
+.btn-action, .products-container .header .cart-icon, .cart .delivery-note {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -361,44 +361,6 @@ a, button, h1, h2, h3, h4, h5, h6 {
   background-color: hsl(from var(--clr-red) h s l/90%);
 }
 
-.header {
-  height: var(--header-height);
-  background-color: var(--clr-rose-100);
-}
-.header .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-.header .logo {
-  color: var(--clr-red);
-  font-size: var(--fs-h2);
-  font-weight: var(--fw-bold);
-}
-@media only screen and (max-width: 639px) {
-  .header .logo {
-    font-size: var(--fs-h4);
-  }
-}
-.header .cart-icon {
-  width: 30px;
-  height: 30px;
-}
-.header .cart-icon img {
-  max-width: 30px;
-}
-@media only screen and (min-width: 1024px) {
-  .header .cart-icon {
-    display: none;
-  }
-}
-
 .overlay {
   height: 100%;
   width: 100%;
@@ -416,9 +378,35 @@ a, button, h1, h2, h3, h4, h5, h6 {
   pointer-events: all;
 }
 
-.products-container h1 {
+.products-container .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.products-container .header h1 {
   font-size: var(--fs-h1);
   margin-block: var(--spacing-4);
+  color: var(--clr-rose-900);
+}
+.products-container .header .cart-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--br-2);
+}
+.products-container .header .cart-icon img {
+  max-width: 30px;
+  aspect-ratio: 1;
+}
+@media only screen and (min-width: 1024px) {
+  .products-container .header .cart-icon {
+    display: none;
+  }
 }
 .products-container .content {
   display: -webkit-box;

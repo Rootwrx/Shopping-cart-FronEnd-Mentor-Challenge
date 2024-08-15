@@ -25,41 +25,44 @@ const createProduct = (
                   alt="${name}"
                 />
               </div>
-              <div class="product-actions">
-                <button data-action="addtocart" class="addtocart main-btn">
+              <div class="product-actions" aria-label="Product actions">
+                <button data-action="addtocart" class="addtocart main-btn" aria-label="Add to cart">
                   <img
                     src="assets/images/icon-add-to-cart.svg"
-                    alt="icon-add-to-cart"
+                    alt=""
+                    aria-hidden="true"
                   />
                   <span> Add to Cart </span>
                 </button>
 
                 <div class="product-quantity-controls main-btn" role="button">
-                  <button data-action="removefromcart" class="btn-action remove">
+                  <button data-action="removefromcart" class="btn-action remove" aria-label="Decrease quantity">
                     <img
                       src="./assets/images/icon-decrement-quantity.svg"
-                      alt="icon-decrement-quantity"
+                      alt=""
+                      aria-hidden="true"
                     />
                   </button>
 
-                  <span class="product-quantity item-quantity">${
+                  <span class="product-quantity item-quantity" aria-live="polite">${
                     FromCart?.quantity || 0
                   }</span>
 
-                  <button data-action="addmore" class="btn-action addmore">
+                  <button data-action="addmore" class="btn-action addmore" aria-label="Increase quantity">
                     <img
                       src="./assets/images/icon-increment-quantity.svg"
-                      alt="icon-increment-quantity"
+                      alt=""
+                      aria-hidden="true"
                     />
                   </button>
                 </div>
               </div>
             </div>
-            <div class="product-details">
+            <section class="product-details">
               <h3 class="product-category">${category}</h3>
               <h4 class="product-name">${name}</h4>
               <span class="product-price">${formatPrice(price)}</span>
-            </div>
+            </section>
   `;
   return product;
 };

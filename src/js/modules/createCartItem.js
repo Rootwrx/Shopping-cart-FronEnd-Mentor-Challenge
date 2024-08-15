@@ -2,7 +2,7 @@ import { createElement, formatPrice } from "./exporter.js";
 
 const createCartItem = ({ price, name, quantity, id, thumbnail }, Items) => {
   const FromCart = Items?.find((ob) => ob.id == id);
-  const cartItem = createElement("div", {
+  const cartItem = createElement("article", {
     class: "cart-item item",
     "data-id": id,
   });
@@ -13,19 +13,20 @@ const createCartItem = ({ price, name, quantity, id, thumbnail }, Items) => {
                   <div>
                     <h4 class="item-name">${name}</h4>
                     <p class="item-pricing">
-                      <span class="item-quantity">${quantity}x</span>
+                      <span class="item-quantity" aria-live="polite">${quantity}x</span>
                       <span class="item-price">@${price}</span>
-                      <span class="item-total">${formatPrice(
+                      <span class="item-total" aria-live="polite">${formatPrice(
                         FromCart ? FromCart.quantity * price : price
                       )}</span>
                     </p>
                   </div>
                 </div>
-                <span class="item-total toclone">${formatPrice(
+                <span class="item-total toclone" aria-live="polite">${formatPrice(
                   FromCart ? FromCart.quantity * price : price
                 )}</span>
-                <button class="remove-cart-item btn-action">
-                    <img src="assets/images/icon-remove-item.svg" alt="icon-remove-item" />
+                <button class="remove-cart-item btn-action" aria-label="Remove ${name} from cart">
+                    <img src="assets/images/icon-remove-item.svg"  aria-hidden="true" alt="" />
+                     
                 </button>
   `;
   return cartItem;

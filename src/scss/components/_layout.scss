@@ -15,9 +15,27 @@
 }
 
 .products-container {
-  h1 {
-    font-size: var(--fs-h1);
-    margin-block: var(--spacing-4);
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h1 {
+      font-size: var(--fs-h1);
+      margin-block: var(--spacing-4);
+      color: var(--clr-rose-900)
+    }
+    .cart-icon {
+      @extend %flex-center !optional;
+      @include box(50px);
+      border-radius: var(--br-2);
+      img {
+        max-width: 30px;
+        aspect-ratio: 1;
+      }
+      @include media(lg) {
+        display: none;
+      }
+    }
   }
   .content {
     display: flex;
