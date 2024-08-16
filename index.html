@@ -6,9 +6,11 @@
     <link
       rel="icon"
       type="image/png"
-      href="images/favicon-32x32.png"
+      href="./src/assets/images/favicon-32x32.png"
     />
-    <script type="module" defer src="./main.js"></script>
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <!-- <script type="module" defer src="/src/js/app.js"></script> -->
+    <script defer src="/dist/bundle.js"></script>
 
     <title>Product List With Cart</title>
   </head>
@@ -17,7 +19,7 @@
     <div class="order-confirmed" aria-live="polite" hidden>
       <div>
         <img
-          src="images/icon-order-confirmed.svg"
+          src="./src/assets/images/icon-order-confirmed.svg"
           alt="Order confirmed icon"
         />
         <h2>Order confirmed</h2>
@@ -35,7 +37,7 @@
           <h1>Desserts</h1>
           <button class="cart-icon" aria-label="Open shopping cart">
             <img
-              src="images/icon-shopping-cart.png"
+              src="./src/assets/images/icon-shopping-cart.png"
               alt="icon-shopping-cart"
             />
           </button>
@@ -55,7 +57,7 @@
 
             <div class="cart-empty" aria-live="polite">
               <img
-                src="images/illustration-empty-cart.svg"
+                src="./src/assets/images/illustration-empty-cart.svg"
                 alt="Illustration of an empty shopping cart"
               />
               <p>Your cart is empty</p>
@@ -75,7 +77,7 @@
                 </div>
               </div>
               <p class="delivery-note">
-                <img src="images/icon-carbon-neutral.svg" alt="" />
+                <img src="./src/assets/images/icon-carbon-neutral.svg" alt="" />
                 <span>This is a carbon-neutral delivery</span>
               </p>
               <button class="main-btn confirm-order">Confirm Order</button>
