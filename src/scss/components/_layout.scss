@@ -1,18 +1,4 @@
-.overlay {
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  opacity: 0;
-  z-index: var(--z-index-modal-backdrop);
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  transition: var(--transition-duration-slow);
-  &.show {
-    opacity: 0.5;
-    pointer-events: all;
-  }
-}
+
 
 .products-container {
   padding-bottom: var(--spacing-8);
@@ -21,29 +7,39 @@
     align-items: center;
     justify-content: space-between;
     height: var(--header-height);
-    transition:all var(--transition-duration-base) linear , padding .2s linear;
+    transition: all var(--transition-duration-base) linear, padding 0.2s linear;
     margin-bottom: var(--spacing-3);
-    
-    &.hidden { 
-      top: -100px;
-    }
-    &.show {
-      background-color: var(--clr-white); 
-      padding: var(--spacing-2);
-      z-index: var(--z-index-fixed);
-      position: sticky;
-      top: var(--spacing-1);
-      left: 0;
-      right: 0;
-      width: 100%;
-      border-radius: var(--br-2);
-      box-shadow: var(--box-shadow-md);
+
+    @include media(lg, max) {
+      &.hidden {
+        top: -100px;
+      }
+      &.show {
+        background-color: hsl(from var(--clr-black) h s l  / 10%);
+        backdrop-filter: blur(10px);
+        padding: var(--spacing-2);
+        z-index: var(--z-index-fixed);
+        position: sticky;
+        top: var(--spacing-1);
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: var(--br-2);
+        box-shadow: var(--box-shadow-md);
+       
+       
+        .cart-icon { 
+          background: none;
+          backdrop-filter: blur(1440px);
+
+        }
+      }
     }
     h1 {
       font-size: var(--fs-h2);
       margin-block: var(--spacing-4);
       font-family: var(--ff-title);
-      color: var(--clr-rose-900);
+      color: var(--clr-red);
     }
     .cart-icon {
       @extend %flex-center !optional;
@@ -52,6 +48,8 @@
       img {
         max-width: 25px;
         aspect-ratio: 1;
+        margin-bottom: var(--spacing-2);
+        margin-right: var(--spacing-1);
       }
       @include media(lg) {
         display: none;

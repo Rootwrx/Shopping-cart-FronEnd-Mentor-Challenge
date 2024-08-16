@@ -143,5 +143,20 @@ a,button,h1,h2,h3,h4,h5,h6 {
     }
   }
 }
+.overlay {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0;
+  z-index: var(--z-index-modal-backdrop);
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  transition: var(--transition-duration-slow);
+  &.show {
+    opacity: 0.5;
+    pointer-events: all;
+  }
+}
 
 /* Initial state for lazy-loaded images */
