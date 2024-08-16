@@ -322,7 +322,7 @@ a, button, h1, h2, h3, h4, h5, h6 {
   padding-inline: var(--spacing-4);
   margin-inline: auto;
   height: 100%;
-  max-width: 1424px;
+  max-width: 1300px;
 }
 
 .main-btn {
@@ -431,6 +431,11 @@ a, button, h1, h2, h3, h4, h5, h6 {
   transition: all var(--transition-duration-base) linear, padding 0.2s linear;
   margin-bottom: var(--spacing-3);
 }
+@media only screen and (min-width: 768px) {
+  .products-container .header {
+    margin-block: var(--spacing-6);
+  }
+}
 @media only screen and (max-width: 1023px) {
   .products-container .header.hidden {
     top: -100px;
@@ -457,7 +462,7 @@ a, button, h1, h2, h3, h4, h5, h6 {
   }
 }
 .products-container .header h1 {
-  font-size: var(--fs-h2);
+  font-size: var(--fs-h1);
   margin-block: var(--spacing-4);
   font-family: var(--ff-title);
   color: var(--clr-red);
@@ -482,7 +487,7 @@ a, button, h1, h2, h3, h4, h5, h6 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: var(--spacing-4);
+  gap: var(--spacing-6);
 }
 .products-container .content .cart {
   -ms-flex-item-align: start;
@@ -546,8 +551,11 @@ a, button, h1, h2, h3, h4, h5, h6 {
       -ms-flex-positive: 1;
           flex-grow: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--spacing-5);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-6);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 .products .product {
   position: relative;
@@ -619,7 +627,7 @@ a, button, h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 .products .product-image .image {
-  aspect-ratio: 3/2;
+  height: 250px;
 }
 .products .product-image .image img {
   border-radius: var(--br-3);
