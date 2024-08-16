@@ -1,3 +1,4 @@
+import "./src/scss/style.scss";
 import {
   UISelectors,
   fetchProducts,
@@ -7,9 +8,9 @@ import {
   get,
   formatPrice,
   load,
-} from "./modules/exporter.js";
-import { LazyLoader } from "./modules/lazyloader.js";
-import { debouncer } from "./modules/utils.js";
+} from "./src/modules/exporter.js";
+import { LazyLoader } from "./src/modules/lazyloader.js";
+import { debouncer } from "./src/modules/utils.js";
 const Cart = {
   ...load(),
   save() {
@@ -28,7 +29,7 @@ const Cart = {
   },
 
   UpdateTotal({ amount }, op = "+", count) {
-    Cart.total = eval(`${Cart.total} ${op} ${amount}`);
+    Cart.total += op == "+" ? amount : -amount;
     if (count) Cart.itemsCount -= count;
     else Cart.itemsCount += op == "+" ? 1 : -1;
   },
@@ -158,30 +159,29 @@ const UI = {
   },
 
   showHeader() {
-  let previousScroll = 0; // Initialize to track previous scroll position
+    let previousScroll = 0; // Initialize to track previous scroll position
 
-  return function () {
-    const currentScroll = window.scrollY; 
+    return function () {
+      const currentScroll = window.scrollY;
 
-    if (currentScroll > 50) {
-      if (currentScroll > previousScroll) {
-        // Scrolling down
-        UISelectors.Header.classList.remove("show");
-        UISelectors.Header.classList.add("hidden");
+      if (currentScroll > 50) {
+        if (currentScroll > previousScroll) {
+          // Scrolling down
+          UISelectors.Header.classList.remove("show");
+          UISelectors.Header.classList.add("hidden");
+        } else {
+          // Scrolling up
+          UISelectors.Header.classList.remove("hidden");
+          UISelectors.Header.classList.add("show");
+        }
       } else {
-        // Scrolling up
-        UISelectors.Header.classList.remove("hidden");
-        UISelectors.Header.classList.add("show");
+        // Scrolling less than 50 pixels
+        UISelectors.Header.classList.remove("show", "hidden");
       }
-    } else {
-      // Scrolling less than 50 pixels
-      UISelectors.Header.classList.remove("show", "hidden");
-    }
 
-    previousScroll = currentScroll; 
-  };
-},
-
+      previousScroll = currentScroll;
+    };
+  },
 
   CartVisibility(show) {
     UISelectors.Overlay.classList.toggle("show", show);

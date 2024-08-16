@@ -2,7 +2,7 @@ import { createProduct } from "./exporter.js";
 
 const fetchProducts = async (container, loader, Cart) => {
   try {
-    const res = await fetch("/src/js/data.json");
+    const res = await fetch("/src/modules/data.json");
     if (!res.ok) throw new Error("data.json doesn't exit,or Wrong Path !");
     const data = await res.json();
     const fragment = document.createDocumentFragment();

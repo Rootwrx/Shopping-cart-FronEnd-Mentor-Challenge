@@ -1,4 +1,4 @@
-import { Cart } from "../app.js";
+import { Cart } from "../../main.js";
 import { createCartItem } from "./createCartItem.js";
 import { createProduct } from "./createProduct.js";
 import { fetchProducts } from "./fetchProducts.js";

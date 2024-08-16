@@ -30,7 +30,7 @@ const createProduct = (
               <div class="product-actions" aria-label="Product actions">
                 <button data-action="addtocart" class="addtocart main-btn" aria-label="Add to cart">
                   <img
-                    src="assets/images/icon-add-to-cart.svg"
+                    src="images/icon-add-to-cart.svg"
                     alt=""
                     aria-hidden="true"
                   />
@@ -40,19 +40,19 @@ const createProduct = (
                 <div class="product-quantity-controls main-btn" role="button">
                   <button data-action="removefromcart" class="btn-action remove" aria-label="Decrease quantity">
                     <img
-                      src="./assets/images/icon-decrement-quantity.svg"
+                      src="images/icon-decrement-quantity.svg"
                       alt=""
                       aria-hidden="true"
                     />
                   </button>
 
                   <span class="product-quantity item-quantity" aria-live="polite">${
-                    FromCart?.quantity   + "x"
+                    FromCart?.quantity + "x"
                   }</span>
 
                   <button data-action="addmore" class="btn-action addmore" aria-label="Increase quantity">
                     <img
-                      src="./assets/images/icon-increment-quantity.svg"
+                      src="images/icon-increment-quantity.svg"
                       alt=""
                       aria-hidden="true"
                     />
