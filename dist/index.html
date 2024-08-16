@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="images/favicon-32x32.png"
+    />
+
+    <title>Product List With Cart</title>
+    <script type="module" crossorigin src="./assets/index-D7ZJZsBJ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index.Cq9lrZ_h.css">
+  </head>
+  <body>
+    <div class="page-loader" role="status" aria-label="Loading content"></div>
+    <div class="order-confirmed" aria-live="polite" hidden>
+      <div>
+        <img
+          src="images/icon-order-confirmed.svg"
+          alt="Order confirmed icon"
+        />
+        <h2>Order confirmed</h2>
+        <p>We hope you enjoy your food</p>
+      </div>
+
+      <button class="main-btn start-new-order">Start a new order</button>
+    </div>
+
+    <div class="overlay" aria-hidden="true"></div>
+
+    <main>
+      <section class="products-container container">
+        <div class="header">
+          <h1>Desserts</h1>
+          <button class="cart-icon" aria-label="Open shopping cart">
+            <img
+              src="images/icon-shopping-cart.png"
+              alt="icon-shopping-cart"
+            />
+          </button>
+        </div>
+        <div class="content">
+          <div class="products" role="list"></div>
+
+          <aside
+            id="cart"
+            class="cart-container cart"
+            aria-label="Shopping Cart"
+          >
+            <h2 class="cart-title">
+              Your Cart (<span class="item-count" aria-live="polite">0</span>
+              items)
+            </h2>
+
+            <div class="cart-empty" aria-live="polite">
+              <img
+                src="images/illustration-empty-cart.svg"
+                alt="Illustration of an empty shopping cart"
+              />
+              <p>Your cart is empty</p>
+            </div>
+            <div class="cart-holder hidden" aria-live="polite">
+              <div class="cart-body">
+                <div class="cart-items" role="list"></div>
+                <div class="cart-summary">
+                  <div class="order-total">
+                    <span id="total-label" class="total-label"
+                      >Order Total</span
+                    >
+                    <p class="total-amount" aria-labelledby="total-label">
+                      $<span class="cart-total">0</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p class="delivery-note">
+                <img src="images/icon-carbon-neutral.svg" alt="" />
+                <span>This is a carbon-neutral delivery</span>
+              </p>
+              <button class="main-btn confirm-order">Confirm Order</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
