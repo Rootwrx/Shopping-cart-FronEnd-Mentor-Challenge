@@ -9,5 +9,5 @@ export default defineConfig({
       },
     },
   },
-  base: "./", // Ensures that all URLs are relative
+  base: "/Shopping-cart-FronEnd-Mentor-Challenge/", // Ensures that all URLs are relative
 });
