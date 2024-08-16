@@ -5,7 +5,7 @@ const createProduct = (
 ) => {
   const FromCart = Cart?.items.find((ob) => ob.name == name);
   const product = createElement("div", {
-    class: `product ${FromCart ? "added" : ""}`,
+    class: `product loader ${FromCart ? "added" : ""}`,
     "data-id": FromCart ? FromCart.id : UUID(),
     "data-quantity": FromCart ? FromCart.quantity : 0,
     "data-price": price,
@@ -23,7 +23,9 @@ const createProduct = (
                     ${desktop} 502w
                   "
                   alt="${name}"
+                  class="lazy-load"
                 />
+               
               </div>
               <div class="product-actions" aria-label="Product actions">
                 <button data-action="addtocart" class="addtocart main-btn" aria-label="Add to cart">
@@ -45,7 +47,7 @@ const createProduct = (
                   </button>
 
                   <span class="product-quantity item-quantity" aria-live="polite">${
-                    FromCart?.quantity || 0
+                    FromCart?.quantity   + "x"
                   }</span>
 
                   <button data-action="addmore" class="btn-action addmore" aria-label="Increase quantity">

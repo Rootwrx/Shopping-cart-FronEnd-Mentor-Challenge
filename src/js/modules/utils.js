@@ -7,8 +7,9 @@ const createElement = (tag, attributes = {}) => {
   return element;
 };
 
-const $ = (selector, parent = document) => parent.querySelector(selector);
-const $$ = (selector, parent = document) => parent.querySelectorAll(selector);
+const get = (selector, parent = document) => parent.querySelector(selector);
+const getAll = (selector, parent = document) =>
+  parent.querySelectorAll(selector);
 
 const formatPrice = (price, no) =>
   no ? "" : "$" + parseFloat(price).toFixed(2);
@@ -39,20 +40,42 @@ const load = () => {
   };
 };
 
-// const UUID = () =>
-//   "xxxx-xxx-xxx".replace(/[xy]/g, (c) => {
-//     var r = (Math.random() * 16) | 0,
-//       v = c == "x" ? r : (r & 0x3) | 0x8;
-//     return v.toString(16);
-//   });
 const UUID = () => Math.random().toString(36).substr(2, 9);
+
+const debouncer = (fn, s) => {
+  let timer;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(context, args), s);
+  };
+};
+
+HTMLElement.prototype.get = function (selector) {
+  this.querySelector(selector);
+};
+HTMLElement.prototype.getAll = function (selector) {
+  this.querySelector(selector);
+};
+// function extractPathExtension(imagePath) {
+//   // Find the last dot in the path to split the extension
+//   const lastDotIndex = imagePath.lastIndexOf(".");
+
+//   // Separate the path without the extension and the extension itself
+//   const pathWithoutExtension = imagePath.slice(0, lastDotIndex);
+//   const extension = imagePath.slice(lastDotIndex + 1);
+
+//   return [pathWithoutExtension, extension];
+// }
+
 export {
   UUID,
   load,
   getProductData,
-  $,
-  $$,
+  get,
+  getAll,
   createElement,
   formatPrice,
   Actions,
+  debouncer,
 };

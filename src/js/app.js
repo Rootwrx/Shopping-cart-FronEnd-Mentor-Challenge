@@ -3,11 +3,13 @@ import {
   fetchProducts,
   getProductData,
   createCartItem,
-  $$,
-  $,
+  getAll,
+  get,
   formatPrice,
   load,
 } from "./modules/exporter.js";
+import { LazyLoader } from "./modules/lazyloader.js";
+import { debouncer } from "./modules/utils.js";
 const Cart = {
   ...load(),
   save() {
@@ -33,7 +35,7 @@ const Cart = {
 
   removeItem({ id, quantity, price }) {
     if (quantity == 1)
-      $(
+      get(
         `[data-id="${id}"] .remove-cart-item`,
         UISelectors.CartContainer
       ).click();
@@ -61,6 +63,7 @@ const Cart = {
 const UI = {
   clonedCartBody: false,
 
+  //end lazyloader
   productsClick(event) {
     const { target } = event;
     if (!target.closest(".product")) return;
@@ -71,10 +74,10 @@ const UI = {
   },
 
   removeCartItem(id) {
-    $(`[data-id="${id}"]`, UISelectors.ProductsContainer).classList.remove(
+    get(`[data-id="${id}"]`, UISelectors.ProductsContainer).classList.remove(
       "added"
     );
-    $(`[data-id="${id}"]`, UISelectors.CartContainer).remove();
+    get(`[data-id="${id}"]`, UISelectors.CartContainer).remove();
   },
 
   updateCartTotals() {
@@ -84,7 +87,7 @@ const UI = {
 
   renderCartItem(obj) {
     UISelectors.CartContainer.prepend(createCartItem(obj));
-    $(`[data-id="${obj.id}"]`, UISelectors.ProductsContainer).classList.add(
+    get(`[data-id="${obj.id}"]`, UISelectors.ProductsContainer).classList.add(
       "added"
     );
   },
@@ -99,16 +102,16 @@ const UI = {
   updateUi(id) {
     const item = Cart.items.find((obj) => obj.id == id);
     if (item) {
-      $$(`[data-id="${id}"]`).forEach((element) => {
-        $(".item-quantity", element).textContent = item.quantity + "x";
+      getAll(`[data-id="${id}"]`).forEach((element) => {
+        get(".item-quantity", element).textContent = item.quantity + "x";
       });
-      const CartItem = $(`[data-id="${id}"]`, UISelectors.CartContainer);
-      $$(`.item-total`, CartItem).forEach(
+      const CartItem = get(`[data-id="${id}"]`, UISelectors.CartContainer);
+      getAll(`.item-total`, CartItem).forEach(
         (el) => (el.textContent = formatPrice(item.quantity * item.price))
       );
     } else this.removeCartItem(id);
 
-    $(`[data-id="${id}"]`, UISelectors.ProductsContainer).dataset.quantity =
+    get(`[data-id="${id}"]`, UISelectors.ProductsContainer).dataset.quantity =
       item?.quantity || 0;
     this.updateCartTotals();
     this.toggleCartContent();
@@ -131,7 +134,7 @@ const UI = {
     UI.toggleCartContent();
     UI.updateCartTotals();
   },
-  ClickStartNewOrder() {
+  resetUI() {
     Cart.items = [];
     Cart.total = 0;
     Cart.itemsCount = 0;
@@ -143,7 +146,7 @@ const UI = {
     this.toggleCartContent();
 
     // Remove 'added' class from all products
-    $$(".product.added", UISelectors.ProductsContainer).forEach((el) =>
+    getAll(".product.added", UISelectors.ProductsContainer).forEach((el) =>
       el.classList.remove("added")
     );
 
@@ -153,6 +156,32 @@ const UI = {
     UISelectors.OrderConfirmed.classList.remove("show");
     this.clonedCartBody = false;
   },
+
+  showHeader() {
+  let previousScroll = 0; // Initialize to track previous scroll position
+
+  return function () {
+    const currentScroll = window.scrollY; 
+
+    if (currentScroll > 50) {
+      if (currentScroll > previousScroll) {
+        // Scrolling down
+        UISelectors.Header.classList.remove("show");
+        UISelectors.Header.classList.add("hidden");
+      } else {
+        // Scrolling up
+        UISelectors.Header.classList.remove("hidden");
+        UISelectors.Header.classList.add("show");
+      }
+    } else {
+      // Scrolling less than 50 pixels
+      UISelectors.Header.classList.remove("show", "hidden");
+    }
+
+    previousScroll = currentScroll; 
+  };
+},
+
 
   CartVisibility(show) {
     UISelectors.Overlay.classList.toggle("show", show);
@@ -166,7 +195,7 @@ const UI = {
     this.CartVisibility(false);
     UISelectors.OrderConfirmed.classList.remove("show");
   },
-  ClickConfirmOrder() {
+  ConfirmOrder() {
     // Create a document fragment to build the clone off-DOM
     const fragment = document.createDocumentFragment();
     const clone = UISelectors.CartBody.cloneNode(true);
@@ -177,7 +206,7 @@ const UI = {
     if (this.clonedCartBody) {
       UISelectors.OrderConfirmed.replaceChild(
         fragment,
-        $(".cloned", UISelectors.OrderConfirmed)
+        get(".cloned", UISelectors.OrderConfirmed)
       );
     } else {
       UISelectors.OrderConfirmed.insertBefore(
@@ -198,12 +227,14 @@ const UI = {
       UISelectors.Loader,
       Cart
     );
+    new LazyLoader().observe(getAll(".lazy-load"));
+
     UISelectors.ProductsContainer.addEventListener("click", this.productsClick);
     UISelectors.CartContainer.addEventListener("click", this.ClickCart);
     UISelectors.Overlay.addEventListener("click", this.ClickOverlay.bind(this));
     UISelectors.StartNewOrder.addEventListener(
       "click",
-      this.ClickStartNewOrder.bind(this)
+      this.resetUI.bind(this)
     );
     UISelectors.CartIcon.addEventListener(
       "click",
@@ -211,12 +242,17 @@ const UI = {
     );
     UISelectors.ConfirmOrder.addEventListener(
       "click",
-      this.ClickConfirmOrder.bind(this)
+      this.ConfirmOrder.bind(this)
     );
     this.initializeCart();
+    window.addEventListener("scroll", debouncer(this.showHeader(), 10));
   },
 };
 
 window.addEventListener("DOMContentLoaded", UI.init.bind(UI));
 
 export { Cart };
+/*
+
+
+*/

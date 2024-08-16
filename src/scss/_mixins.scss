@@ -33,6 +33,72 @@ $grid-breakpoints: (
   }
 }
 
+@mixin lazy-loader(
+  $loader-size: 50px,
+  $loader-border: 5px,
+  $loader-color: var(--clr-red),
+  $loader-bg: var(--clr-rose-50)
+) {
+  &.loader {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      // display: block;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      height: $loader-size;
+      width: $loader-size;
+      border: $loader-border solid $loader-color;
+      border-left-width: 0px;
+      z-index: 10;
+      border-radius: 50%;
+      animation: loaderspin 1s linear infinite;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: $loader-bg;
+      z-index: 5;
+      inset: 0;
+    }
+    &:has(.loaded) {
+      &::before,
+      &::after {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+      }
+    }
+  }
+
+  img.lazy-load {
+    filter: blur(19px);
+    opacity: 0;
+    transition: opacity 0.5s ease-in, filter 1s ease-in;
+
+    &.loaded {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+}
+
+@keyframes loaderspin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @mixin fade($type: in, $duration: 0.3s, $easing: ease-in-out) {
   transition: all $duration $easing, height 0.3s ease-in-out;
   @if $type == in {

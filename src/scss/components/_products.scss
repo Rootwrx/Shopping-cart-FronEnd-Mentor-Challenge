@@ -1,0 +1,106 @@
+.products {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-5);
+
+  .product {
+    position: relative;
+    border-radius: var(--br-3);
+    transition: var(--transition-duration-base);
+    box-shadow: var(--box-shadow-sm);
+    min-height: max-content;
+    border: 1px solid transparent;
+    &:hover {
+      border-color: var(--clr-rose-300);
+      transform: translateY( calc(-1 * var(--spacing-2)) )
+    }
+
+    @include lazy-loader();
+
+    &-image {
+      margin-bottom: var(--spacing-4);
+      position: relative;
+      .image {
+        aspect-ratio: 3/2;
+      }
+      .image img {
+        border-radius: var(--br-3);
+        height: 100%;
+        display: block;
+        width: 100%;
+      }
+    }
+    &-actions {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      background-color: red;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0px;
+      width: clamp(120px, 140px, 180px);
+      .addtocart,
+      .product-quantity-controls {
+        position: absolute;
+        width: 100%;
+      }
+      .addtocart {
+        background-color: var(--clr-white);
+        color: var(--clr-red);
+        border: 1px solid var(--clr-red);
+        font-size: var(--fs-xs);
+      }
+    }
+    &-quantity-controls {
+      @include fade(out);
+      @extend %flex-between;
+      background-color: var(--clr-red);
+      color: var(--clr-white);
+
+      .btn-action {
+        border-color: var(--clr-white);
+      }
+    }
+
+    &.added {
+      .image img {
+        border: 3px solid var(--clr-red);
+      }
+
+      .product-actions {
+        .addtocart {
+          @include fade(out);
+        }
+        .product-quantity-controls {
+          @include fade(in);
+        }
+      }
+    }
+
+    &-details {
+      text-align: left;
+      padding: var(--spacing-4);
+    }
+
+    &-category {
+      margin-bottom: var(--spacing-2);
+      color: var(--clr-gray-light);
+      font-weight: var(--fw-semibold);
+      font-size: var(--fs-sm);
+    }
+
+    &-name {
+      font-size: var(--fs-md);
+      color: var(--clr-text-dark);
+      margin-bottom: var(--spacing-1);
+      color: var(--clr-gray-dark);
+    }
+
+    &-price {
+      font-size: var(--fs-base);
+      color: var(--clr-red);
+      font-weight: var(--fw-semibold);
+    }
+  }
+}
