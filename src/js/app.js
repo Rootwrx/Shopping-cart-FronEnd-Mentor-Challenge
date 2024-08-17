@@ -8,7 +8,7 @@ import {
   formatPrice,
   load,
 } from "./modules/exporter.js";
-import { LazyLoader } from "./modules/lazyloader.js";
+import  LazyLoader  from "./modules/lazyloader.js";
 import { debouncer } from "./modules/utils.js";
 const Cart = {
   ...load(),
@@ -227,7 +227,7 @@ const UI = {
       UISelectors.Loader,
       Cart
     );
-    new LazyLoader().observe(getAll(".lazy-load"));
+    new LazyLoader()
 
     UISelectors.ProductsContainer.addEventListener("click", this.productsClick);
     UISelectors.CartContainer.addEventListener("click", this.ClickCart);
