@@ -42,10 +42,14 @@ $grid-breakpoints: (
   &.loader {
     position: relative;
     overflow: hidden;
-
+    --failure-times: 0;
+    &::after,
     &::before {
       content: "";
       position: absolute;
+    }
+
+    &::before {
       top: 50%;
       left: 50%;
       translate: -50% -50%;
@@ -59,14 +63,13 @@ $grid-breakpoints: (
     }
 
     &::after {
-      content: "";
-      position: absolute;
       height: 100%;
       width: 100%;
       background-color: $loader-bg;
       z-index: 5;
       inset: 0;
     }
+
     &:has(.loaded) {
       &::before,
       &::after {
@@ -75,12 +78,28 @@ $grid-breakpoints: (
         transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
       }
     }
+
+    &:has(.failed) {
+      &::before {
+        border: none;
+        content: "Error loading image";
+        font-family: "Courier New", Courier, monospace;
+        height: 0;
+        animation: none;
+        white-space: nowrap;
+        text-align: center;
+        width: fit-content;
+        font-size: var(--fs-h4);
+        color: var(--clr-red);
+        font-weight: var(--fw-bold);
+      }
+    }
   }
 
   img.lazy-load {
     filter: blur(19px);
     opacity: 0;
-    transition: opacity 0.5s ease-in, filter 1s ease-in;
+    transition: opacity 0.3s ease-in, filter 1s ease-in;
 
     &.loaded {
       opacity: 1;
