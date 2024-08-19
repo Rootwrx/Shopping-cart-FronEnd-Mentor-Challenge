@@ -30,7 +30,7 @@ const createProduct = (
               <div class="product-actions" aria-label="Product actions">
                 <button data-action="addtocart" class="addtocart main-btn" aria-label="Add to cart">
                   <img
-                    src="assets/images/icon-add-to-cart.svg"
+                    src="./src/assets/images/icon-add-to-cart.svg"
                     alt=""
                     aria-hidden="true"
                   />
