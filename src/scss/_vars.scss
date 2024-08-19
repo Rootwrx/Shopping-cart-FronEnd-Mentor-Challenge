@@ -70,6 +70,8 @@
   --spacing-12: 6rem; /* 96px */
 
   --spacing-responsive: var(--spacing-xs);
+  --products-gap: 1rem;
+
 
   /* Border Radius */
   --br-1: 4px;
@@ -112,6 +114,7 @@
     --fs-big-title: 3.5rem;
   }
   @include media(lg) {
+    --products-gap: 1.2rem;
     --fs-xs: 0.8125rem; /* 13px */
     --fs-sm: 0.9375rem; /* 15px */
     --fs-base: 1.0625rem; /* 17px */
@@ -123,6 +126,7 @@
     --fs-big-title: 3.5rem;
   }
   @include media(xxl) {
+    --products-gap: 1.8rem;
     --fs-xs: 0.9375rem; /* 15px */
     --fs-sm: 1.0625rem; /* 17px */
     --fs-base: 1.25rem; /* 20px */
