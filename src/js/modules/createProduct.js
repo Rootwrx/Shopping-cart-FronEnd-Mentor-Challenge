@@ -23,7 +23,7 @@ const createProduct = (
                     ${desktop} 502w
                   "
                   alt="${name}"
-                  class="lazy-load"
+                  class="lazy"
                 />
                
               </div>
