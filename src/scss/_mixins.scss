@@ -33,6 +33,8 @@ $grid-breakpoints: (
   }
 }
 
+// lazy laoder 
+
 @mixin lazy-loader(
   $loader-size: 50px,
   $loader-border: 5px,
@@ -42,7 +44,6 @@ $grid-breakpoints: (
   &.loader {
     position: relative;
     overflow: hidden;
-    --failure-times: 0;
     &::after,
     &::before {
       content: "";
@@ -73,9 +74,8 @@ $grid-breakpoints: (
     &:has(.loaded) {
       &::before,
       &::after {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+        @include fade(out);
+        content: none;
       }
     }
 
@@ -93,13 +93,17 @@ $grid-breakpoints: (
         color: var(--clr-red);
         font-weight: var(--fw-bold);
       }
+      // &::after ,&::before {
+      //   content: none;
+      //   display: none;
+      // }
     }
   }
 
-  img.lazy-load {
+  img.lazy {
     filter: blur(19px);
     opacity: 0;
-    transition: opacity 0.3s ease-in, filter 1s ease-in;
+    transition: opacity 0.3s ease-in, filter 0.7s ease-in;
 
     &.loaded {
       opacity: 1;
@@ -116,6 +120,8 @@ $grid-breakpoints: (
     transform: rotate(360deg);
   }
 }
+
+// end lazyloader
 
 @mixin fade($type: in, $duration: 0.3s, $easing: ease-in-out) {
   transition: all $duration $easing, height 0.3s ease-in-out;
