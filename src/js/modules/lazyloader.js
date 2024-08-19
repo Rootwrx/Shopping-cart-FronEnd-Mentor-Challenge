@@ -3,46 +3,39 @@ class LazyLoader {
     this.options = {
       loadingClass: "loading",
       loadedClass: "loaded",
-      selector: ".lazy-load",
+      selector: "lazy",
       errorClass: "failed",
-      retryAfter: 2000,
+      retryAfter: 600,
       maxRetries: 4,
       loadCallback: null,
+      failCallback: null,
+      useFallbackImg: true,
       rootMargin: "0px 0px 100px 0px",
       threshold: 0.1,
+      fallbackSrc:
+        "https://placehold.co/600x400?text=Original+Image+Has+Failed+!",
+
       ...options,
     };
-    // prettier-ignore
-    this.selector = `${this.options.selector.trim()}:not([data-status="${this.options.loadedClass}"],[data-status="${this.options.loadingClass}"])`;
 
     this.elements = new Map();
     this.observer = null;
-    this.lazyImgs = [];
+    this.removeSrcset = false;
+    this.fallBackSrcUsed = false;
+    this.faiCallbackUsed = false;
+
     this.init();
   }
 
-  handleIntersection(entries) {
-    if (!this.observer) return;
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        this.loadElement(entry.target);
-      }
-    }
-
-    if (this.elements.size === 0) {
-      this.observer.disconnect();
-      this.observer = null;
-    }
-  }
   init() {
-    this.lazyImgs = Array.from(
-      document.querySelectorAll(this.options.selector)
-    );
-    if (!"IntersectionObserver" in window) {
+    const lazyElements = document.querySelectorAll(`.${this.options.selector}`);
+
+    if (!("IntersectionObserver" in window)) {
       console.warn("IntersectionObserver is not supported by this browser.");
-      this.loadImagesFallback();
+      this.loadElementsFallback(lazyElements);
       return;
     }
+
     this.observer = new IntersectionObserver(
       this.handleIntersection.bind(this),
       {
@@ -50,16 +43,18 @@ class LazyLoader {
         threshold: this.options.threshold,
       }
     );
-    this.observe();
+
+    this.observeElements(lazyElements);
   }
 
-  observe() {
-    this.lazyImgs.forEach((element) => {
+  observeElements(elements) {
+    elements.forEach((element) => {
       if (this.elements.has(element)) return;
 
       this.elements.set(element, {
-        src: element.dataset?.src,
-        srcset: element.dataset?.srcset,
+        src: element.dataset.src,
+        srcset: element.dataset.srcset,
+        sizes: element.dataset.sizes,
         status: null,
       });
 
@@ -67,56 +62,117 @@ class LazyLoader {
     });
   }
 
-  loadImagesFallback() {
-    this.lazyImgs.forEach((image) => image && this.loadElement(image));
+  handleIntersection(entries) {
+    entries.forEach(
+      (entry) => entry.isIntersecting && this.loadElement(entry.target)
+    );
   }
 
   async loadElement(element) {
     const data = this.elements.get(element);
-    if (!data) return;
-    const { loadingClass, loadedClass, loadCallback } = this.options;
-    if (data.status == loadingClass) {
-      console.log(element);
-    }
-    if (
-      data.status == loadingClass ||
-      data.status == loadedClass ||
-      element.dataset.status == loadedClass
-    )
-      return;
-    data.status = element.dataset.status = loadingClass;
-    element.classList.add(loadingClass);
+    if (!data || data.status === this.options.loadedClass) return;
+
+    data.status = this.options.loadingClass;
+    element.classList.add(this.options.loadingClass);
 
     try {
-      if (element.tagName.toLowerCase() === "img")
-        await this.loadImg(element, data);
-      else await this.loadBgImg(element, data);
-
-      element.classList.replace(loadingClass, loadedClass);
-      element.removeAttribute("data-src");
-      element.removeAttribute("data-srcset");
-
-      data.status = element.dataset.status = loadedClass;
-
-      if (typeof loadCallback === "function") {
-      }
-      loadCallback?.();
-      this.unobserve(element);
+      await (element.tagName.toLowerCase() === "img"
+        ? this.loadImage(element, data)
+        : this.loadBackgroundImage(element, data));
+      this.markAsLoaded(element);
     } catch (error) {
-      this.handleError(element, data);
-      throw error;
+      this.handleError(element, data, error);
     }
   }
 
-  handleError(element, data) {
-    if (!data.retries) data.retries = 1;
-    // removing 'loading status' to allow retrying
-    delete data.status;
-    if (data.retries < this.options.maxRetries) {
-      console.log("Retrying loading ", element);
-      data.retries += 1;
+  loadImage(img, data) {
+    return new Promise((resolve, reject) => {
+      if (data.src) img.src = data.src;
+      if (data.srcset) img.srcset = data.srcset;
+      if (data.sizes) img.sizes = data.sizes;
+
+      if (img.complete) {
+        img.naturalWidth
+          ? resolve()
+          : reject(new Error(`Image is broken: ${data.src}`));
+      } else {
+        img.onload = resolve;
+        img.onerror = () =>
+          reject(new Error(`Failed to load image: ${data.src || img.srcset}`));
+      }
+    });
+  }
+
+  loadBackgroundImage(element, data) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        element.style.backgroundImage = `url(${data.src})`;
+        resolve();
+      };
+      img.onerror = () =>
+        reject(new Error(`Failed to load background image: ${data.src}`));
+      img.src = data.src;
+    });
+  }
+
+  markAsLoaded(element) {
+    element.classList.replace(
+      this.options.loadingClass,
+      this.options.loadedClass
+    );
+    element.removeAttribute("data-src");
+    element.removeAttribute("data-srcset");
+    element.dataset.status = this.options.loadedClass;
+    this.options.loadCallback?.(element);
+    this.unobserve(element);
+  }
+
+  handleError(element, data, error) {
+    console.error(error.message);
+    data.retries = (data.retries || 0) + 1;
+
+    if (data.retries <= this.options.maxRetries) {
       setTimeout(() => this.loadElement(element), this.options.retryAfter);
+    } else if (!this.faiCallbackUsed) {
+      this.useFailCallback(element, data);
+    } else if (!this.fallBackSrcUsed && this.options.useFallbackImg) {
+      this.useFallbackSrc(element, data);
+    } else if (!this.removeSrcset) {
+      //? why removing srcset ?
+      //* well, a even if img has a valid src, it will fail if it has a non-valid srcset
+      console.warn("Removing potentiel broken srcset");
+      this.removeSrcset = true;
+      element.srcset = "";
+      data.srcset = null;
+      this.loadElement(element);
     } else this.markAsError(element);
+  }
+
+  useFailCallback(element) {
+    this.faiCallbackUsed = true;
+    this.options.failCallback?.(element);
+
+    const newSrc = element.getAttribute("src");
+    const newSrcset = element.getAttribute("srcset");
+
+    this.elements.set(element, {
+      src: newSrc,
+      srcset: newSrcset,
+    });
+    this.loadElement(element);
+  }
+
+  useFallbackSrc(element) {
+    this.fallBackSrcUsed = true;
+    console.warn("Using fallback src as last resort");
+
+    element.removeAttribute("srcset");
+    this.elements.set(element, {
+      src: this.options.fallbackSrc,
+      srcset: null,
+    });
+    this.loadElement(element);
   }
 
   markAsError(element) {
@@ -125,9 +181,9 @@ class LazyLoader {
       this.options.loadingClass,
       this.options.errorClass
     );
-    this.unobserve(element);
     element.removeAttribute("data-src");
     element.removeAttribute("data-srcset");
+    this.unobserve(element);
   }
 
   unobserve(element) {
@@ -135,37 +191,8 @@ class LazyLoader {
     this.elements.delete(element);
   }
 
-  loadImg(img, data) {
-    return new Promise((resolve, reject) => {
-      if (data.src) img.src = data.src;
-      if (data.srcset) img.srcset = data.srcset;
-
-      // if image is already downloaded or cached before it intersects the viewport
-      if (img.complete) resolve();
-      else {
-        img.onload = resolve;
-        img.onerror = () =>
-          reject(new Error(`Failed to load image: ${data.src || img.srcset}`));
-      }
-    });
-  }
-
-  loadBgImg(element, data) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-
-      if (img.complete) {
-        element.style.backgroundImage = `url(${data.src})`;
-        resolve();
-      } else {
-        img.onload = () => {
-          element.style.backgroundImage = `url(${data.src})`;
-          resolve();
-        };
-        img.onerror = () =>
-          reject(new Error(`Failed to load background image: ${data.src}`));
-      }
-    });
+  loadElementsFallback(elements) {
+    elements.forEach((element) => this.loadElement(element));
   }
 
   destroy() {
@@ -176,4 +203,5 @@ class LazyLoader {
     this.elements.clear();
   }
 }
+
 export default LazyLoader;
