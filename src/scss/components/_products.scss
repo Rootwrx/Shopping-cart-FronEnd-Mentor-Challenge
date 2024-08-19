@@ -22,17 +22,17 @@
 
     &-image {
       margin-bottom: var(--spacing-4);
-      position: relative;
-      .image {
-        height: 250px;
-      }
-      .image img {
+      overflow: hidden;
+      img {
         border-radius: var(--br-3);
         height: 100%;
         display: block;
         width: 100%;
+        transition: var(--transition-duration-slow);
+        height: clamp(200px,250px,280pc);
       }
     }
+    
     &-actions {
       display: grid;
       place-items: center;
