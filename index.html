@@ -6,19 +6,20 @@
     <link
       rel="icon"
       type="image/png"
-      href="./src/assets/images/favicon-32x32.png"
+      href="./assets/images/favicon-32x32.png"
     />
-    <link rel="stylesheet" href="./src/css/style.css" />
-    <script type="module" defer src="/src/js/app.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script type="module" defer src="./assets/js/app.js"></script>
 
     <title>Product List With Cart</title>
   </head>
   <body>
+    <div id="trigger"></div>
     <div class="page-loader" role="status" aria-label="Loading content"></div>
     <div class="order-confirmed" aria-live="polite" hidden>
       <div>
         <img
-          src="./src/assets/images/icon-order-confirmed.svg"
+          src="./assets/images/icon-order-confirmed.svg"
           alt="Order confirmed icon"
         />
         <h2>Order confirmed</h2>
@@ -36,7 +37,7 @@
           <h1>Desserts</h1>
           <button class="cart-icon" aria-label="Open shopping cart">
             <img
-              src="./src/assets/images/icon-shopping-cart.png"
+              src="./assets/images/icon-shopping-cart.png"
               alt="icon-shopping-cart"
             />
           </button>
@@ -56,8 +57,9 @@
 
             <div class="cart-empty" aria-live="polite">
               <img
-                src="./src/assets/images/illustration-empty-cart.svg"
+                src="./assets/images/illustration-empty-cart.svg"
                 alt="Illustration of an empty shopping cart"
+                class="lazy"
               />
               <p>Your cart is empty</p>
             </div>
@@ -76,7 +78,11 @@
                 </div>
               </div>
               <p class="delivery-note">
-                <img src="./src/assets/images/icon-carbon-neutral.svg" alt="" />
+                <img
+                  src="./assets/images/icon-carbon-neutral.svg"
+                  class="lazy"
+                  alt=""
+                />
                 <span>This is a carbon-neutral delivery</span>
               </p>
               <button class="main-btn confirm-order">Confirm Order</button>

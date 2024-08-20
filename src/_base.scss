@@ -14,8 +14,8 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   font-family: var(--ff-body);
-  background-color: var(--clr-rose-50);min-height: 100vh;
-
+  background-color: var(--clr-rose-50);
+  min-height: 100vh;
 }
 
 a {
@@ -159,4 +159,7 @@ a,button,h1,h2,h3,h4,h5,h6 {
   }
 }
 
+#trigger {
+  height: 500px; /* Height to create the scroll space before the trigger point */
+}
 /* Initial state for lazy-loaded images */

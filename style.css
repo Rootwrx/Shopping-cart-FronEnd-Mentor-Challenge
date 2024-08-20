@@ -59,7 +59,7 @@
   /* Font Family */
   --ff-headings: "Red Hat Text", sans-serif;
   --ff-body: "Open Sans", sans-serif;
-  --ff-title: "Raleway" ,sans-serif ;
+  --ff-title: "Raleway", sans-serif;
   /* Font Weight */
   --fw-normal: 400;
   --fw-semibold: 600;
@@ -95,6 +95,7 @@
   --spacing-10: 4rem; /* 64px */
   --spacing-12: 6rem; /* 96px */
   --spacing-responsive: var(--spacing-xs);
+  --products-gap: 1rem;
   /* Border Radius */
   --br-1: 4px;
   --br-2: 8px;
@@ -142,6 +143,7 @@
 }
 @media only screen and (min-width: 1024px) {
   :root {
+    --products-gap: 1.2rem;
     --fs-xs: 0.8125rem; /* 13px */
     --fs-sm: 0.9375rem; /* 15px */
     --fs-base: 1.0625rem; /* 17px */
@@ -155,6 +157,7 @@
 }
 @media only screen and (min-width: 1536px) {
   :root {
+    --products-gap: 1.8rem;
     --fs-xs: 0.9375rem; /* 15px */
     --fs-sm: 1.0625rem; /* 17px */
     --fs-base: 1.25rem; /* 20px */
@@ -169,31 +172,31 @@
 
 @font-face {
   font-family: "RedHatText";
-  src: url("../fonts/static/RedHatText-Regular.ttf") format("truetype");
+  src: url("../assets/fonts/static/RedHatText-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "RedHatText";
-  src: url("../fonts/static/RedHatText-Bold.ttf") format("truetype");
+  src: url("../assets/fonts/static/RedHatText-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: "RedHatText";
-  src: url("../fonts/static/RedHatText-SemiBold.ttf") format("truetype");
+  src: url("../assets/fonts/static/RedHatText-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
   font-family: "RedHatText";
-  src: url("../fonts/RedHatText-Italic-VariableFont_wght.ttf") format("truetype");
+  src: url("../assets/fonts/RedHatText-Italic-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
 }
 @font-face {
   font-family: "RedHatText";
-  src: url("../fonts/RedHatText-VariableFont_wght.ttf") format("truetype");
+  src: url("../assets/fonts/RedHatText-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -322,7 +325,7 @@ a, button, h1, h2, h3, h4, h5, h6 {
   padding-inline: var(--spacing-4);
   margin-inline: auto;
   height: 100%;
-  max-width: 1300px;
+  max-width: 1000px;
 }
 
 .main-btn {
@@ -410,6 +413,10 @@ a, button, h1, h2, h3, h4, h5, h6 {
 .overlay.show {
   opacity: 0.5;
   pointer-events: all;
+}
+
+#trigger {
+  height: 500px; /* Height to create the scroll space before the trigger point */
 }
 
 /* Initial state for lazy-loaded images */
@@ -578,9 +585,11 @@ a, button, h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
 }
-.products .product.loader::before {
+.products .product.loader::after, .products .product.loader::before {
   content: "";
   position: absolute;
+}
+.products .product.loader::before {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
@@ -594,8 +603,6 @@ a, button, h1, h2, h3, h4, h5, h6 {
           animation: loaderspin 1s linear infinite;
 }
 .products .product.loader::after {
-  content: "";
-  position: absolute;
   height: 100%;
   width: 100%;
   background-color: var(--clr-rose-50);
@@ -603,37 +610,55 @@ a, button, h1, h2, h3, h4, h5, h6 {
   inset: 0;
 }
 .products .product.loader:has(.loaded)::before, .products .product.loader:has(.loaded)::after {
-  opacity: 0;
+  -webkit-transition: all 0.3s ease-in-out, height 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out, height 0.3s ease-in-out;
   visibility: hidden;
-  -webkit-transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
-  transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+  pointer-events: none;
+  opacity: 0;
+  content: none;
 }
-.products .product img.lazy-load {
+.products .product.loader:has(.failed)::before {
+  border: none;
+  content: "Error loading image";
+  font-family: "Courier New", Courier, monospace;
+  height: 0;
+  -webkit-animation: none;
+          animation: none;
+  white-space: nowrap;
+  text-align: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: var(--fs-h4);
+  color: var(--clr-red);
+  font-weight: var(--fw-bold);
+}
+.products .product img.lazy {
   -webkit-filter: blur(19px);
           filter: blur(19px);
   opacity: 0;
-  -webkit-transition: opacity 0.5s ease-in, -webkit-filter 1s ease-in;
-  transition: opacity 0.5s ease-in, -webkit-filter 1s ease-in;
-  transition: opacity 0.5s ease-in, filter 1s ease-in;
-  transition: opacity 0.5s ease-in, filter 1s ease-in, -webkit-filter 1s ease-in;
+  -webkit-transition: opacity 0.7s ease-in, -webkit-filter 0.7s ease-in;
+  transition: opacity 0.7s ease-in, -webkit-filter 0.7s ease-in;
+  transition: opacity 0.7s ease-in, filter 0.7s ease-in;
+  transition: opacity 0.7s ease-in, filter 0.7s ease-in, -webkit-filter 0.7s ease-in;
 }
-.products .product img.lazy-load.loaded {
+.products .product img.lazy.loaded {
   opacity: 1;
   -webkit-filter: blur(0);
           filter: blur(0);
 }
 .products .product-image {
   margin-bottom: var(--spacing-4);
-  position: relative;
+  overflow: hidden;
 }
-.products .product-image .image {
-  height: 250px;
-}
-.products .product-image .image img {
+.products .product-image img {
   border-radius: var(--br-3);
   height: 100%;
   display: block;
   width: 100%;
+  -webkit-transition: var(--transition-duration-slow);
+  transition: var(--transition-duration-slow);
+  height: 250px;
 }
 .products .product-actions {
   display: grid;
