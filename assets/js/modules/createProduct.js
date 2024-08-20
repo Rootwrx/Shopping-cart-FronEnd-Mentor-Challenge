@@ -37,6 +37,7 @@ const createProduct = (
                   <img
                     src="./assets/images/icon-add-to-cart.svg"
                     alt=""
+                    class="lazy"
                     aria-hidden="true"
                   />
                   <span> Add to Cart </span>
@@ -47,6 +48,7 @@ const createProduct = (
                     <img
                       src="./assets/images/icon-decrement-quantity.svg"
                       alt=""
+                    class="lazy"
                       aria-hidden="true"
                     />
                   </button>
@@ -59,6 +61,8 @@ const createProduct = (
                     <img
                       src="./assets/images/icon-increment-quantity.svg"
                       alt=""
+                    class="lazy"
+
                       aria-hidden="true"
                     />
                   </button>

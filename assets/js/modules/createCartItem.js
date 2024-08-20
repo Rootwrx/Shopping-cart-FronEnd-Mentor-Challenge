@@ -25,7 +25,9 @@ const createCartItem = ({ price, name, quantity, id, thumbnail }, Items) => {
                   FromCart ? FromCart.quantity * price : price
                 )}</span>
                 <button class="remove-cart-item btn-action" aria-label="Remove ${name} from cart">
-                    <img src="./assets/images/icon-remove-item.svg"  aria-hidden="true" alt="" />
+                    <img  src="./assets/images/icon-remove-item.svg"  aria-hidden="true" 
+                    class="lazy"
+                     alt="" />
                      
                 </button>
   `;
